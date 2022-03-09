@@ -94,14 +94,21 @@ cat /etc/passwd
 ```
 - Créer un utilisateur : 
 ``` bash
-useradd -m -s /bin/bash -d /home/$user $user
+$ useradd -m -s /bin/bash -d /home/$user $user #en root
 
-mkdir .ssh
+$ su tadam 
 
-touch ~/.ssh/authorized_keys
+$ mkdir ~/.ssh ~/log ~/www 
+
+$ touch /.ssh/authorized_keys 
+
 ```
-Copier les clefs ssh publiques souhaitées dnas le fichier.  
+Copier les clefs ssh publiques souhaitées dnas le fichier. (La clef à mettre et celle générée par mobaXterne lorsque tu load ta `private_key`)
 
+Puis il faut générer une paire de clefs pour l'utilisateur (utilisation pour `Github` par exemple)
+```
+$ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -P ""
+```
 - Supprimer un utilisateur : 
 ``` bash
 userdel -r <nom>
@@ -145,7 +152,7 @@ apt-get install apache2
 
 ---
 ## Installation PM2
-`PM2` permet de déployer sur le serveur des application `NodeJS`. 
+`PM2` permet de déployer  sur le serveur des application `NodeJS`. 
 
 1- Installer `PM2`
 ```
@@ -169,7 +176,11 @@ $ pm2 delete <id>
 
 # Lister les instances 
 $ pm2 list
+
+# Logs
+$ pm2 log 
 ```
+Possibilité d'accéder au dossier avec les logs d'erreur. `.pm2/logs/<log>`
 
 ---
 ## Installation de GIT
@@ -177,12 +188,8 @@ $ pm2 list
 ```
 $ sudo apt install git
 ```
-2- Initialisation de l'utilisateur 
-```
-$ git config --global user.name "<name>"
-$ git config --global user.email "<email>"
-```  
-3- Pour vérifier la configuration 
+2- Aller sur le projet git et y rentrer la clef publique ssh de l'utilisateur   
+3- Une config est dispo et visible avec
 ```
 $ git config --list
 ``` 
@@ -241,8 +248,8 @@ Fichier type de configuration `vhost` :
 
   DocumentRoot <path projet>
 
-  ErrorLog ${APACHE_LOG_DIR}/error.log
-  CustomLog ${APACHE_LOG_DIR}/access.log combined
+  ErrorLog /home/{user}/log/error.log
+  CustomLog /home/{user}/log/access.log combined
 
   ProxyRequests Off
   ProxyPreserveHost On
