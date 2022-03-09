@@ -280,3 +280,20 @@ $ sudo apt install python3-certbot-apache -y
 ```
 sudo certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email <email> -d www.<site>
 ```
+
+---
+## Ajouter un sous domaine 
+Pour ajouter un sous domaine il faut dans un premier temps aller sur OVH `https://www.ovh.com/manager/web/#/domain/<domaine>/zone`. 
+
+- Il faut cliquer sur `Ajouter une entrée`, et choisir le `A`. La config se fait toute seule après.   
+- Il ne faut pas oublier de faire le `<sous-domaine>.<domaine>.<extension>` mais aussi le `www.<sous-domaine>.<domaine>.<extension>`  
+- Prendre une invite de commande et ping les 2 domaines jusqu'à ce que les paquets soient reçu.   
+- Il suffit de configurer son host apache2 (`Gestion des vhosts`).  
+
+- En cas de changement de domaine d'un site déjà existant et sous certificat SSL : 
+```
+$ certbot -auto delete --cert-name <www.exemple.com>
+```  
+- Aller dans le fichier `<domaine>.conf` et retirer les 3 dernières lignes parlant de SEncrypt.   
+- Supprimer le `vhost-le-ssl.conf`.
+- Suivre la procédure `Certificat SSL`
