@@ -143,6 +143,49 @@ apt-get update && apt-get upgrade -y
 apt-get install apache2
 ```
 
+---
+## Installation PM2
+`PM2` permet de déployer sur le serveur des application `NodeJS`. 
+
+1- Installer `PM2`
+```
+$ sudo npm install pm2 -g
+```
+2- Pour lancer le serveur créer au préalable dans votre projet 
+```
+$ pm2 start <path/server.js> --name <nom>
+```
+
+Exemple de commandes : 
+```
+# Redémarrer 
+$ pm2 restart <id>
+
+# Arrêter
+$ pm2 stop <id>
+
+# Supprimer 
+$ pm2 delete <id>
+
+# Lister les instances 
+$ pm2 list
+```
+
+---
+## Installation de GIT
+1- Installer git 
+```
+$ sudo apt install git
+```
+2- Initialisation de l'utilisateur 
+```
+$ git config --global user.name "<name>"
+$ git config --global user.email "<email>"
+```  
+3- Pour vérifier la configuration 
+```
+$ git config --list
+``` 
 
 ---
 ## Gestion de l'utilisation des ports 
