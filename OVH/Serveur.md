@@ -297,3 +297,44 @@ $ certbot -auto delete --cert-name <www.exemple.com>
 - Aller dans le fichier `<domaine>.conf` et retirer les 3 dernières lignes parlant de SEncrypt.   
 - Supprimer le `vhost-le-ssl.conf`.
 - Suivre la procédure `Certificat SSL`
+
+## Gestion des logs avec Logrotate
+Logrotate permet de compresser suivant un planning les logs afin qu'elles ne prennent pas trop de place.  
+Pour l'installer taper en root :   
+```
+$ apt install logrotate
+
+```
+Il va s'installer dans /etc/  
+Pour vérifier sa présence tape :
+```
+$ logrotate
+```
+Une fois ça fait il faut créer un fichier pour configurer la routine
+```
+$ touch /etc/logrotate.d/<nom-domaine>
+```
+Enfin rentrer ce code en adaptant à son utilisateur / site. (Une conf par site sera nécessaire)
+```
+/home/<user>/log/*.log {
+  su  <user> <group (= user souvent)>
+  daily
+  missingok
+  rotate 14
+  compress
+  delaycompress
+  notifempty
+  create 640 <user> <group>
+  sharedscripts
+  postrotate
+          if /etc/init.d/apache2 status > /dev/null ; then \
+          /etc/init.d/apache2 reload > /dev/null; \
+          fi;
+  endscript
+  prerotate
+          if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                  run-parts /etc/logrotate.d/httpd-prerotate; \
+          fi; \
+  endscript
+}
+```
