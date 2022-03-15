@@ -180,6 +180,15 @@ $ pm2 list
 # Logs
 $ pm2 log 
 ```
+Il est possible d'activer le redéploiement automatique en cas de changement dans le dossier (automatisation avec git)
+```
+$ pm2 start <server.js> --watch
+```
+
+Il est aussi possible de créer un système de cluster aka de loadbalancing en cas d'erreur sur une instance grâce à la commande : 
+```
+$ pm2 start <server.js> -i <nb_clone_instance>
+```
 Possibilité d'accéder au dossier avec les logs d'erreur. `.pm2/logs/<log>`
 
 ---
