@@ -189,8 +189,45 @@ Il est aussi possible de créer un système de cluster aka de loadbalancing en c
 ```
 $ pm2 start <server.js> -i <nb_clone_instance>
 ```
-Possibilité d'accéder au dossier avec les logs d'erreur. `.pm2/logs/<log>`
 
+Tu peux aussi faire cette commande qui va générer automatiquement le fichier dont je parle juste en dessous. Puis une fois bien configuré la partie `apps` tu peux lancer la deuxième commande qui équivaut au `pm2 start server.js`.
+
+```
+$ pm2 ecosystem
+
+$ pm2 start ecosystem.config.js
+```
+Possibilité d'accéder au dossier avec les logs d'erreur. `.pm2/logs/<log>`  
+
+Une mise en production automatique avec git est possible grâce à la configuration d'un fichier `ecosystem.config.js` :
+```
+
+module.exports = {
+  apps: [{
+    name: 'vue-flow-form',
+    script: './server.js',
+    instances: 2,
+    exec_mode: 'cluster',
+    watch: true,
+    env_production: {
+      NODE_ENV: "production"
+    }
+  }],
+
+  // Deployment Configuration
+  deploy: {
+    production: {
+      key: '~/.ssh/id_rsa.pub',                            // Chemin vers la clef publique de l'utilisateur
+      user: 'tadam',                                       // Utilisateur VM
+      host: 'localhost',
+      ref: 'origin/main',                                  // Branch
+      repo: 'git@github.com:Mpreard/TadamFormulaire.git',  // Repository SSH
+      path: '/home/tadam/www',                             // Path project on server
+      'post-deploy': 'npm install && pm2 reload ecosystem.config.js'
+    }
+  }
+};
+```
 ---
 ## Installation de GIT
 1- Installer git 
