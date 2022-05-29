@@ -103,7 +103,7 @@ $ mkdir ~/.ssh ~/log ~/www
 $ touch /.ssh/authorized_keys 
 
 ```
-Copier les clefs ssh publiques souhaitées dnas le fichier. (La clef à mettre et celle générée par mobaXterne lorsque tu load ta `private_key`)
+Copier les clefs ssh publiques souhaitées dans le fichier. (La clef à mettre et celle générée par mobaXterne lorsque tu load ta `private_key`)
 
 Puis il faut générer une paire de clefs pour l'utilisateur (utilisation pour `Github` par exemple)
 ```
@@ -325,6 +325,12 @@ $ sudo apt install python3-certbot-apache -y
 4- Adapter et lancer la commande suivante afin de créer le certificat SSL
 ```
 sudo certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email <email> -d www.<site>
+```
+5- Renouveler le certificat existant
+```
+$ sudo /letsencrypt/letsencrypt-auto renew
+
+$ sudo service apache2 restart
 ```
 
 ---
