@@ -152,7 +152,7 @@ apt-get install apache2
 
 ---
 ## Installation PM2
-`PM2` permet de déployer  sur le serveur des application `NodeJS`. 
+`PM2` permet de déployer  sur le serveur des application `NodeJS`.
 
 1- Installer `PM2`
 ```
@@ -163,7 +163,7 @@ $ sudo npm install pm2 -g
 $ pm2 start <path/server.js> --name <nom>
 ```
 
-Exemple de commandes : 
+Exemple de commandes : ATTENTION PM2 SE LANCE AVEC L'UTILISATEUR VOULU ET NON ROOT
 ```
 # Redémarrer 
 $ pm2 restart <id>
@@ -350,6 +350,7 @@ $ certbot -auto delete --cert-name <www.exemple.com>
 - Supprimer le `vhost-le-ssl.conf`.
 - Suivre la procédure `Certificat SSL`
 
+---
 ## Gestion des logs avec Logrotate
 Logrotate permet de compresser suivant un planning les logs afin qu'elles ne prennent pas trop de place.  
 Pour l'installer taper en root :   
@@ -389,4 +390,11 @@ Enfin rentrer ce code en adaptant à son utilisateur / site. (Une conf par site 
           fi; \
   endscript
 }
+```
+
+---
+
+## Vérifier l'état de son serveur
+```bash
+$ htop
 ```
