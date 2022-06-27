@@ -132,4 +132,9 @@ Comme la propriété `flex-wrap` est très souvent utilisée en même temps que 
 --- 
 
 ## Entraînement 
+
 https://flexboxfroggy.com/#fr 
+
+## Documentation
+
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/
