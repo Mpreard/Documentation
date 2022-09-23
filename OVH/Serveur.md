@@ -228,6 +228,19 @@ module.exports = {
   }
 };
 ```
+
+### PM2 avec React 
+
+``` 
+# installe les dépendances du package.json
+npm install
+
+# construit le dossier de déploiement
+npm run build
+
+# lancer l'application
+pm2 serve build <port utilisé dans le vhost> --spa 
+```
 ---
 ## Installation de GIT
 1- Installer git 
@@ -286,7 +299,7 @@ En cas de modification d'un `vhost` il est nécessaire de lancer la commande à 
 systemctl reload apache2
 ```
 
-Fichier type de configuration `vhost` : 
+Fichier type de configuration `vhost` pour un projet sous serveur (Nodejs / React / ...) : 
 ``` bash
 <VirtualHost *:80>
   ServerName <site sans www>
@@ -309,6 +322,26 @@ Fichier type de configuration `vhost` :
   ProxyPassReverse / http://127.0.0.1:<PortLibre>/
 </VirtualHost>
 ```
+
+Fichier type de configuration `vhost` pour un projet html / css :
+```
+<VirtualHost *:80>
+  ServerName <site sans www>
+  ServerAlias <site avec www>
+
+  DocumentRoot <path projet>
+
+  ErrorLog /home/{user}/log/error.log
+  CustomLog /home/{user}/log/access.log combined
+
+  <Directory /home/{user}/www/{user}/>
+     Require all granted
+  </Directory>
+</VirtualHost>
+
+```
+
+
 ---
 ## Certificat SSL (HTTPS)
 Pour passer son site en sécurisé il est nécessaire de générer un certificat SSL. Pour cela `Certbot` est très utile.  
@@ -331,6 +364,15 @@ sudo certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email <email
 $ sudo /letsencrypt/letsencrypt-auto renew
 
 $ sudo service apache2 restart
+```
+
+### Commandes utiles : 
+```
+# liste les certificats existants
+certbot certificates
+
+# supprimer un certificat
+certbot delete --cert-name <url>
 ```
 
 ---
