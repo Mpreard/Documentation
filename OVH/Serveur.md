@@ -357,7 +357,7 @@ $ sudo apt install python3-certbot-apache -y
 ``` 
 4- Adapter et lancer la commande suivante afin de créer le certificat SSL
 ```
-sudo certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email <email> -d www.<site> -d <site>
+$ sudo certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email <email> -d www.<site> -d <site>
 ```
 5- Renouveler le certificat existant
 ```
@@ -369,10 +369,20 @@ $ sudo service apache2 restart
 ### Commandes utiles : 
 ```
 # liste les certificats existants
-certbot certificates
+$ certbot certificates
 
 # supprimer un certificat
-certbot delete --cert-name <url>
+$ certbot delete --cert-name <url>
+```
+
+En cas de nécessité à modifier un certificat il faut : 
+```
+$ a2dissite <site>-ssl.conf
+
+$ systemctl reload apache2
+
+# Choisir l'option d'Extend lors de cette commande
+$ sudo certbot --apache --agree-tos --redirect --hsts --staple-ocsp --email <email> -d www.<site> -d <site>
 ```
 
 ---
