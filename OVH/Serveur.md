@@ -450,3 +450,10 @@ Enfin rentrer ce code en adaptant à son utilisateur / site. (Une conf par site 
 ```bash
 $ htop
 ```
+
+## Mise à jour des paquets serveurs
+```bash
+$ apt update
+$ apt list --upgradable
+$ apt upgrade
+```
